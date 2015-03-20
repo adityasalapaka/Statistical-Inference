@@ -1,0 +1,64 @@
+---
+title: "Statistical Inference, Part 1"
+author: "Aditya Salapaka"
+date: "Friday 20 March 2015"
+output: html_document
+---
+
+# A Basic Analysis of the Exponential Function in R
+
+## Overview
+An exponential distribution with lambda = 0.2 and 40 observations was simulated
+1000 times, and its mean and standard deviation were calculated. These were 
+compared with the theoretical mean and standard deviation. A histogram of the 
+simulated dataset was also created, and a normal distribution curve was 
+superimposed on it to prove that the simulated dataset was approximately normal.
+
+## The Exponential Distribution
+The exponential function is defined as:
+$$ f(x,λ) = e^{-λx} $$
+where λ is the rate parameter. 
+
+The mean of this distribution is ${1}/{λ}$.
+
+## Simulations
+The exponential distribution can be generated in R by the `rexp()` function. I
+generated an exponential distribution with 40 observations and λ = 0.2 and took
+its mean. I ran this simulation 1000 times and created a data frame with the
+averages of all these distributions. The seed for the pseudo-random generator
+was set at 850.
+
+```{r}
+lambda <- 0.2
+n <- 40
+sims <- 1:1000
+
+set.seed(850)
+
+mns <- data.frame(x = sapply(sims, function(x){
+        mean(rexp(n, lambda))
+}))
+```
+
+## Sample Mean vs Theoretical Mean
+The sample mean is `r mean(mns$x)`, which is close to the theoretical mean 
+`r 1/lambda`.
+
+## Sample variance vs Theoretical Variance
+The theoretical variance of this distribution is calculated by applying the
+central limit theorem. The variacne is $\frac{1/λ}{\sqrt{n}}$
+The sample variance is `r var(mns$x)`, which is close to the theoretical
+variance `r ((1/lambda)/sqrt(n))^2`.
+
+## Distribution
+A histogram of the sample data superimposed with a normal distribution curve is
+shown. It is clear that the distribution is approxmimately normal.
+
+```{r}
+require("ggplot2")
+g <- ggplot(mns, aes(x = mns$x))
+p <- g + geom_histogram(aes(y = ..density..), binwidth = 0.4, fill = "white", color = "black") + 
+        stat_function(fun = dnorm, arg = list(mean = 5, sd = sd(mns$x)), colour = "red") + 
+        xlab("Means") + ylab("Density")
+print(p)
+```
