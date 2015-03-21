@@ -97,11 +97,11 @@ mns &lt;- data.frame(x = sapply(sims, function(x){
 </div>
 <div id="sample-variance-vs-theoretical-variance" class="section level2">
 <h2>Sample variance vs Theoretical Variance</h2>
-<p>The theoretical variance of this distribution is calculated by applying the central limit theorem. The variacne is <span class="math">\(\frac{1/λ}{\sqrt{n}}\)</span> The sample variance is 0.6250624, which is close to the theoretical variance 0.625.</p>
+<p>The theoretical variance of this distribution is calculated by applying the central limit theorem. The variance is <span class="math">\(\frac{1/λ}{\sqrt{n}}\)</span> The sample variance is 0.6250624, which is close to the theoretical variance 0.625.</p>
 </div>
 <div id="distribution" class="section level2">
 <h2>Distribution</h2>
-<p>A histogram of the sample data superimposed with a normal distribution curve is shown. It is clear that the distribution is approxmimately normal.</p>
+<p>A histogram of the sample data superimposed with a normal distribution curve is shown. It is clear that the distribution is approximately normal.</p>
 <pre class="r"><code>require(&quot;ggplot2&quot;)</code></pre>
 <pre><code>## Loading required package: ggplot2</code></pre>
 <pre class="r"><code>g &lt;- ggplot(mns, aes(x = mns$x))
