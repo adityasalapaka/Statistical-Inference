@@ -41,18 +41,18 @@ mns <- data.frame(x = sapply(sims, function(x){
 ```
 
 ## Sample Mean vs Theoretical Mean
-The sample mean is `r mean(mns$x)`, which is close to the theoretical mean 
-`r 1/lambda`.
+The distribution is centered at the sample mean `r mean(mns$x)`, which is close 
+to the theoretical mean `r 1/lambda`.
 
 ## Sample variance vs Theoretical Variance
 The theoretical variance of this distribution is calculated by applying the
-central limit theorem. The variacne is $\frac{1/λ}{\sqrt{n}}$
+central limit theorem. The variance is $\frac{1/λ}{\sqrt{n}}$
 The sample variance is `r var(mns$x)`, which is close to the theoretical
 variance `r ((1/lambda)/sqrt(n))^2`.
 
 ## Distribution
 A histogram of the sample data superimposed with a normal distribution curve is
-shown. It is clear that the distribution is approxmimately normal.
+shown. It is clear that the distribution is approximately normal.
 
 ```{r}
 require("ggplot2")
