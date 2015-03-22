@@ -11,6 +11,6 @@ oj <- ToothGrowth[ToothGrowth$supp == 'OJ',]
 
 #difference <- vc-oj
 
-t.test(vc$len[vc$dose == 0.5], oj$len[oj$dose == 0.5], paired = TRUE)
-t.test(vc$len[vc$dose == 1], oj$len[oj$dose == 1], paired = TRUE)
-t.test(vc$len[vc$dose == 2], oj$len[oj$dose == 2], paired = TRUE)
+t.test(vc$len[vc$dose == 0.5], oj$len[oj$dose == 0.5], paired = TRUE, var.equal = TRUE)
+t.test(vc$len[vc$dose == 1], oj$len[oj$dose == 1], paired = TRUE, var.equal = TRUE)
+t.test(vc$len[vc$dose == 2], oj$len[oj$dose == 2], paired = TRUE, var.equal = TRUE)
