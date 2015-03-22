@@ -2,8 +2,8 @@ data(ToothGrowth)
 head(ToothGrowth)
 
 library("ggplot2")
-g <- ggplot(ToothGrowth, aes(len, dose))
-p <- g + geom_point(aes(x = len, y = dose, colour = supp)) + geom_smooth(aes(colour = supp), method = "loess")
+g <- ggplot(ToothGrowth, aes(dose, len))
+p <- g + geom_point(aes(x = dose, y = len, colour = supp)) + geom_smooth(aes(colour = supp), method = "loess")
 print(p)
 
 vc <- ToothGrowth[ToothGrowth$supp == 'VC',]
