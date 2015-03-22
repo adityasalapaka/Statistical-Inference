@@ -1,0 +1,107 @@
+---
+title: "Statistical Inference, Part 2"
+author: "Aditya Salapaka"
+date: "Sunday 22 March 2015"
+output: pdf_document
+---
+
+# Hypothesis Testing on the ToothGrowth dataset
+
+## Overivew
+The ToothGrowth dataset measures the length of teeth in each of the 10 guinea
+pigs given three doses levels of Vitamin C (0.5, 1 and 2mg) with each of two 
+delivery methods (orange juice and ascorbic acid). Via this document, I will
+try to understand the effect of Vitamin C of different dosages via different
+administration methods on the length of the teeth of these guinea pigs.
+
+## Data
+The ToothGrowth dataset is first loaded and observed.
+
+```{r}
+data(ToothGrowth)
+head(ToothGrowth)
+```
+
+For a basic summary of the dataset:
+```{r}
+str(ToothGrowth)
+```
+
+A plot of the dataset is as follows:
+```{r warning=FALSE}
+require("ggplot2")
+g <- ggplot(ToothGrowth, aes(dose, len))
+p <- g + geom_point(aes(x = dose, y = len, colour = supp)) + 
+        geom_smooth(aes(colour = supp), method = "loess")
+print(p)
+```
+
+The red line `OJ` represents the Orange Juice delivery method and blue line `VC`
+represents the Ascorbic Acid delivery method. It is clear that while there 
+exists a significant difference between the lengths of teeth in lower dosages 
+(with `OJ` having a greater impact), this difference is not as pronounced at
+higher dosages. I will attempt to verify this by hypothesis testing.
+
+## Assumptions
+Here, I assume that the populations have equal variances and the sample means
+are normally distributed. 
+
+## Null Hypothesis
+There is no difference between the length of teeth when Vitamin C is delivered
+via Orange Juice or Ascorbic Acid. 
+
+I separated the ToothGrowth into two data frames `oj` and `vc`, which groups
+them based on the method of delivery.
+
+```{r}
+vc <- ToothGrowth[ToothGrowth$supp == 'VC',]
+oj <- ToothGrowth[ToothGrowth$supp == 'OJ',]
+```
+
+## Hypothesis Testing
+Here, I will perform the paired t test with, which has a default confidence 
+level of 95%.
+
+For a dosage of 0.5mg:
+
+```{r}
+t.test(vc$len[vc$dose == 0.5], oj$len[oj$dose == 0.5], paired = TRUE, 
+       var.equal = TRUE)
+```
+
+The 95% confidence values gives the interval -9.23 to -1.26, and the mean of 
+the differences is -5.25. The p-value is 0.015, which is lesser than 0.05. So
+we can reject the null hypothesis for a dosage of 0.5mg. Therefore, different 
+methods of administration does make a difference in the length of teeth of 
+guinea pigs, for a dosage of 0.5mg.
+
+For a dosage of 1mg:
+
+```{r}
+t.test(vc$len[vc$dose == 1], oj$len[oj$dose == 1], paired = TRUE, 
+       var.equal = TRUE)
+```
+
+The 95% confidence values gives the interval -9.91 to -1.95, and the mean of 
+the differences is -5.93. The p-value is 0.008, which is lesser than 0.01. So
+we can reject the null hypothesis for a dosage of 1mg. Therefore, different 
+methods of administration does make a difference in the length of teeth of 
+guinea pigs, for a dosage of 1mg.
+
+For a dosage of 2mg:
+
+```{r}
+t.test(vc$len[vc$dose == 2], oj$len[oj$dose == 2], paired = TRUE, 
+       var.equal = TRUE)
+```
+
+The 95% confidence values gives the interval -4.16 to -4.32, and the mean of 
+the differences is -0.08. The p-value is 0.967, which is greater than 0.05. So
+we cannot reject the null hypothesis for a dosage of 2mg. Therefore, different 
+methods of administration does not make a difference in the length of teeth of 
+guinea pigs, for a dosage of 2mg.
+
+## Conclusion
+From the hypothesis test, we have concluded that for dosages of 0.5mg and 1mg,
+the method of delivery affects the length of teeth in guinea pigs. However, this
+does not hold true for 2mg.
